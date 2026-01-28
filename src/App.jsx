@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from 'react'
 import './App.css'
-import { bubbleSortSteps } from "./algorithm/bubbleSortSteps"
-import { selectionSortSteps } from "./algorithm/selectionSortSteps"
+import { bubbleSortSteps } from './algorithm/bubbleSortSteps'
+import { selectionSortSteps } from './algorithm/selectionSortSteps'
+import { insertionSortSteps } from './algorithm/insertionSortSteps'
 import { ALGO_STATE } from './ALGO_STATE'
 
 const algorithms = {
@@ -12,6 +13,10 @@ const algorithms = {
   selection: {
     name: "Selection Sort",
     steps: selectionSortSteps
+  },
+  insertion: {
+    name: "Insertion Sort",
+    steps: insertionSortSteps
   }
 }
 
@@ -156,6 +161,14 @@ function App() {
         >
           Selection Sort
         </button>
+        <button 
+          onClick={() => handleAlgorithmChange("insertion")}
+          className={currentAlgorithm === "insertion" ? "btn active" : "btn"}
+          disabled={currentAlgorithm === "insertion"}
+        >
+          Insertion Sort
+        </button>
+      
       </div>
       {/* Speed Slider */}
       <div className="controls">
