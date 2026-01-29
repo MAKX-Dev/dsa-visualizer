@@ -5,6 +5,7 @@ import { selectionSortSteps } from './algorithm/selectionSortSteps'
 import { insertionSortSteps } from './algorithm/insertionSortSteps'
 import { ALGO_STATE } from './ALGO_STATE'
 import { quickSortSteps } from './algorithm/quickSortSteps'
+import { mergeSortSteps } from './algorithm/mergeSortSteps'
 
 const algorithms = {
   bubble: {
@@ -22,6 +23,10 @@ const algorithms = {
   quick: {
     name: "Quick Sort",
     steps: quickSortSteps
+  },
+  merge : {
+    name: "Merge Sort",
+    steps: mergeSortSteps
   }
 }
 
@@ -77,7 +82,6 @@ function App() {
   if (steps.length === 0) return 'blue';
   const step = steps[currentStep];
   if (!step) return 'blue';
-  
   // Dimming effect for range-based operations
   if (step.type === 'range') {
     const isOutOfRange = index < step.low || index > step.high;
@@ -86,7 +90,9 @@ function App() {
   let active = [];
   if (step.type === 'compare' || step.type === 'swap') {
     active = [step.i, step.j];
-  } else if (step.type === 'markSorted' || step.type === 'pivot') {
+  }else if (step.type === 'overwrite') {  
+    active = [step.index];
+  }else if (step.type === 'markSorted' || step.type === 'pivot') {
     active = [step.index];
   } 
   // Bars not involved in current operation
@@ -98,6 +104,7 @@ function App() {
     return isSorted ? 'lightgreen' : 'blue';
   }
   // Priority-based coloring for active bars
+  if (step.type === 'overwrite') return 'orange';
   if (step.type === 'pivot') return 'purple';
   if (step.type === 'markSorted') return 'green';
   if (step.type === 'swap') return 'red';
@@ -189,6 +196,13 @@ function App() {
           disabled={currentAlgorithm === "quick"}
         >
           Quick Sort
+        </button>
+         <button 
+          onClick={() => handleAlgorithmChange("merge")}
+          className={currentAlgorithm === "merge" ? "btn active" : "btn"}
+          disabled={currentAlgorithm === "merge"}
+        >
+          Merge Sort
         </button>
       
       </div>
