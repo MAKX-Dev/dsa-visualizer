@@ -70,7 +70,7 @@ function App() {
   }
 
   // Determine which array to render
-  const renderArray = steps.length > 0 && currentStep < steps.length ? steps[currentStep].array:array;
+  const renderArray = steps.length > 0 && currentStep < steps.length && steps[currentStep].array ? steps[currentStep].array:array;
   
   // Determine bar color based on current step type and index
   function getBarColor(index) {
