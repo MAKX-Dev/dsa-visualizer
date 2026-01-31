@@ -4,6 +4,7 @@ export default function Navbar() {
         <div className="navbar">
             <NavLink to="/" end className="nav-btn">Home</NavLink>
              <NavLink to="/sorting" end className="nav-btn"> Sorting</NavLink>
+              <NavLink to="/searching" end className="nav-btn"> Searching</NavLink>
         </div>
     );
 }

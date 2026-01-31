@@ -1,56 +1,34 @@
 import { useState, useRef, useEffect } from 'react'
-import { bubbleSortSteps } from '../Sorting Algorithms/bubbleSortSteps'
-import { selectionSortSteps } from '../Sorting Algorithms/selectionSortSteps'
-import { insertionSortSteps } from '../Sorting Algorithms/insertionSortSteps'
-import { quickSortSteps } from '../Sorting Algorithms/quickSortSteps'
-import { mergeSortSteps } from '../Sorting Algorithms/mergeSortSteps'
+import { linearSearchSteps } from '../Searching Algorithms/linearSearchSteps'
 import { ALGO_STATE } from '../constants/ALGO_STATE'
 
 const algorithms = {
-  bubble: {
-    name: "Bubble Sort",
-    steps: bubbleSortSteps
-  },
-  selection: {
-    name: "Selection Sort",
-    steps: selectionSortSteps
-  },
-  insertion: {
-    name: "Insertion Sort",
-    steps: insertionSortSteps
-  },
-  quick: {
-    name: "Quick Sort",
-    steps: quickSortSteps
-  },
-  merge: {
-    name: "Merge Sort",
-    steps: mergeSortSteps
+  linear:{
+    name : "Linear Search",
+    steps: linearSearchSteps
   }
 }
 
-export default function Sorting() {
+export default function Searching() {
   // State management for the visualizer
   const [array, setArray] = useState([])  
   const [steps, setSteps] = useState([]) 
   const [currentStep, setCurrentStep] = useState(0) 
   const [speed, setSpeed] = useState(500)
   const [algoState, setAlgostate] = useState(ALGO_STATE.IDLE)
-  const [currentAlgorithm, setCurrentAlgorithm] = useState("bubble")
+  const [currentAlgorithm, setCurrentAlgorithm] = useState("linear")
+  const [target, setTarget] = useState(3) // Add target state
   const intervalRef = useRef(null)
-  
   // Initialize array and generate sorting steps
-  function generateArray() {
+   function generateArray() {
     if(algoState === ALGO_STATE.RUNNING) {
       alert("Pause or reset the algorithm first")
       return;
     }
     let list = [5, 3, 5, 1, 3, 8, 5]
     setArray(list);   
-    // Use algorithm map to get the correct function
     const algorithm = algorithms[currentAlgorithm]
-    const sortSteps = algorithm.steps(list);
-    // Choose algorithm based on currentAlgorithm state
+    const sortSteps = algorithm.steps(list, target); // Pass target here!
     setSteps(sortSteps)
     setCurrentStep(0)
     setAlgostate(ALGO_STATE.IDLE);
@@ -66,50 +44,25 @@ export default function Sorting() {
     ? steps[currentStep].array 
     : array;
   
-  // Determine bar color based on current step type and index
-  function getBarColor(index) {
-    if (steps.length === 0) return 'blue';
-    const step = steps[currentStep];
-    if (!step) return 'blue';
-    
-    // Dimming effect for range-based operations
-    if (step.type === 'range') {
-      const isOutOfRange = index < step.low || index > step.high;
-      return isOutOfRange ? "rgba(100, 100, 100, 0.3)" : 'blue';
-    } 
-    
-    let active = [];
-    if (step.type === 'compare' || step.type === 'swap') {
-      active = [step.i, step.j];
-    } else if (step.type === 'markSorted' || step.type === 'pivot') {
-      active = [step.index];
-    } else if (step.type === 'overwrite') {
-      active = [step.index];
-    }
-    
-    // Bars not involved in current operation
-    if (!active.includes(index)) {
-      // Check if this bar is already sorted (from previous steps)
-      const isSorted = steps.slice(0, currentStep).some(
-        s => s.type === 'markSorted' && s.index === index
-      );
-      return isSorted ? 'lightgreen' : 'blue';
-    }
-    
-    // Priority-based coloring for active bars
-    if (step.type === 'pivot') return 'purple';
-    if (step.type === 'markSorted') return 'green';
-    if (step.type === 'overwrite') return 'orange';
-    if (step.type === 'swap') return 'red';
-    if (step.type === 'compare') return 'yellow';
-    
-    return 'blue';
-  }
+ function getBarColor(index) {
+  if (steps.length === 0) return 'blue';
+  const step = steps[currentStep];
+  if (!step) return 'blue';
+  if (step.type === 'not_found') return 'red';
+  if (step.type === 'target' && step.index === index) return 'green';
+  if (step.type === 'compare' && step.index === index) return 'yellow';
+  return 'blue';
+}
 
   // Auto play effect core logic
   useEffect(() => {
+    if(steps.length === 0) return; 
     if (algoState !== ALGO_STATE.RUNNING) {
       if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+      if(currentStep >= steps.length - 1) {
+        setAlgostate(ALGO_STATE.COMPLETED);
         clearInterval(intervalRef.current);
       }
       return;
@@ -155,7 +108,7 @@ export default function Sorting() {
   function handleReset() {
     clearInterval(intervalRef.current);
     setCurrentStep(0);
-    setAlgostate(ALGO_STATE.IDLE);
+    setAlgostate(ALGO_STATE.RUNNING);
   }
 
   function handleAlgorithmChange(algo) {
@@ -178,46 +131,27 @@ export default function Sorting() {
   return (
     <div className="page">
       <div className="sorting-visualizer">
-        <h1>DSA Sorting Visualizer</h1>
-        
+        <h1>DSA Sorting Visualizer</h1>      
+        {/* Add target input field */}
+        <div className="controls">
+          <label>Target Value: </label>
+          <input
+            type="number" 
+            value={target}
+            // onChange={(e) => setTarget(Number(e.target.value))}
+            disabled={algoState === ALGO_STATE.RUNNING}
+          />
+        </div>
+
         {/* Algorithm Selection */}
         <div className="algorithm-selection">
           <button 
-            onClick={() => handleAlgorithmChange("bubble")}
-            className={currentAlgorithm === "bubble" ? "btn active" : "btn"}
-            disabled={currentAlgorithm === "bubble"}
+            onClick={() => handleAlgorithmChange("linear")}
+            className={currentAlgorithm === "linear" ? "btn active" : "btn"}
+            disabled={currentAlgorithm === "linear"}
           >
-            Bubble Sort
+            Linear Search
           </button>
-          <button 
-            onClick={() => handleAlgorithmChange("selection")}
-            className={currentAlgorithm === "selection" ? "btn active" : "btn"}
-            disabled={currentAlgorithm === "selection"}
-          >
-            Selection Sort
-          </button>
-          <button 
-            onClick={() => handleAlgorithmChange("insertion")}
-            className={currentAlgorithm === "insertion" ? "btn active" : "btn"}
-            disabled={currentAlgorithm === "insertion"}
-          >
-            Insertion Sort
-          </button>
-          <button 
-            onClick={() => handleAlgorithmChange("quick")}
-            className={currentAlgorithm === "quick" ? "btn active" : "btn"}
-            disabled={currentAlgorithm === "quick"}
-          >
-            Quick Sort
-          </button>
-          <button 
-            onClick={() => handleAlgorithmChange("merge")}
-            className={currentAlgorithm === "merge" ? "btn active" : "btn"}
-            disabled={currentAlgorithm === "merge"}
-          >
-            Merge Sort
-          </button>
-        </div>
 
         {/* Speed Slider */}
         <div className="controls">
@@ -290,5 +224,6 @@ export default function Sorting() {
         </div>
       </div>
     </div>
+   </div>
   );
 }

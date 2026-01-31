@@ -6,6 +6,7 @@ export default function Home() {
             <h1>DSA Visualizer</h1>
             <p>Learn algorithms visually.</p>
             <button onClick={()=> navigate("/sorting")}>Go to sorting</button>
+            <button onClick={()=> navigate("/searching")}>Go to searching</button>
         </div>
     );
 }
