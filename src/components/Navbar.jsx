@@ -7,7 +7,7 @@ export default function Navbar() {
 
   const isSorting = pathname.startsWith("/sorting");
   const isSearching = pathname.startsWith("/searching");
-
+  const isTreeNode = pathname.startsWith("/Trees")
   return (
     <nav className="navbar-wrapper">
       <div className="navbar">
@@ -30,6 +30,12 @@ export default function Navbar() {
             className={`nav-link ${isSearching ? "active" : ""}`}
           >
             Searching
+          </Link>
+          <Link
+            to="/Trees"
+            className={`nav-link ${isTreeNode ? "active" : ""}`}
+          >
+           Trees
           </Link>
         </div>
 

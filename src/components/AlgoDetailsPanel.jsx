@@ -152,7 +152,7 @@ export default function AlgoDetailsPanel({ algo }) {
                   color: complexityColor(value),
                   fontFamily: "'JetBrains Mono', monospace",
                 }}>
-                  {value || '—'}
+                  {value || '-'}
                 </div>
               </div>
             ))}
@@ -176,7 +176,7 @@ export default function AlgoDetailsPanel({ algo }) {
                 fontSize: '13px',
               }}>
                 <span style={{ color: info.stable ? '#22c55e' : '#ef4444' }}>
-                  {info.stable ? '✓' : '✗'}
+                  {info.stable ? '' : ''}
                 </span>
                 <span style={{ color: '#94a3b8' }}>Stable</span>
               </div>
@@ -193,7 +193,7 @@ export default function AlgoDetailsPanel({ algo }) {
                 fontSize: '13px',
               }}>
                 <span style={{ color: info.inPlace ? '#22c55e' : '#ef4444' }}>
-                  {info.inPlace ? '✓' : '✗'}
+                  {info.inPlace ? '' : ''}
                 </span>
                 <span style={{ color: '#94a3b8' }}>In-Place</span>
               </div>
@@ -209,7 +209,7 @@ export default function AlgoDetailsPanel({ algo }) {
                 borderRadius: '20px',
                 fontSize: '13px',
               }}>
-                <span style={{ color: '#60a5fa' }}>⬡</span>
+                <span style={{ color: '#60a5fa' }}></span>
                 <span style={{ color: '#94a3b8' }}>{info.category}</span>
               </div>
             )}

@@ -1,0 +1,291 @@
+.tree-visualizer {
+  min-height: calc(100vh - 60px);
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  animation: fadeIn 0.6s ease-out;
+  background: #0d1117;
+}
+
+
+.control-panel {
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  border-radius: 7px;
+  margin-top: 55px;
+  padding: 24px;
+}
+
+.control-section {
+  margin-bottom: 24px;
+}
+
+.control-section:last-child {
+  margin-bottom: 0;
+}
+
+.section-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+}
+
+
+.algorithm-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.algo-btn {
+  padding: 10px 20px;
+  background: rgba(148, 163, 184, 0.05);
+  border: 1.5px solid rgba(148, 163, 184, 0.15);
+  border-radius: 5px;
+  color: #94a3b8;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+.algo-btn:hover {
+  border-color: rgba(34, 197, 94, 0.4);
+  color: #e2e8f0;
+}
+
+.algo-btn.active {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  border-color: #22c55e;
+  color: #0f172a;
+  font-weight: 600;
+}
+
+
+.action-buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.action-btn {
+  padding: 12px 24px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.node-input {
+  padding: 11px 16px;
+  border-radius: 5px;
+  border: 1.5px solid rgba(148, 163, 184, 0.15);
+  background: rgba(148, 163, 184, 0.05);
+  color: #e2e8f0;
+  font-size: 14px;
+  font-weight: 500;
+  width: 100px;
+  outline: none;
+  transition: all 0.3s ease;
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+}
+
+.node-input:focus {
+  border-color: rgba(34, 197, 94, 0.4);
+  background: rgba(34, 197, 94, 0.05);
+}
+
+.node-input::placeholder {
+  color: #475569;
+}
+
+.node-input::-webkit-outer-spin-button,
+.node-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+.node-input[type=number] { -moz-appearance: textfield; }
+
+.btn-insert {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: white;
+}
+
+.btn-delete {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+}
+
+.btn-search {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  color: #0f172a;
+}
+
+.btn-clear {
+  background: rgba(148, 163, 184, 0.1);
+  color: #94a3b8;
+  border: 1.5px solid rgba(148, 163, 184, 0.2) !important;
+}
+
+.btn-clear:hover {
+  background: rgba(148, 163, 184, 0.15);
+  color: #e2e8f0;
+}
+
+
+.tree-canvas-wrapper {
+  flex: 1;
+  padding: 40px 20px;
+  background: rgba(15, 23, 42, 0.4);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  border-radius: 7px;
+  min-height: 400px;
+  position: relative;
+  overflow: auto;
+}
+
+.tree-canvas-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    linear-gradient(90deg, rgba(34, 197, 94, 0.03) 1px, transparent 1px),
+    linear-gradient(rgba(34, 197, 94, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.tree-svg {
+  width: 100%;
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+
+
+.status-bar {
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  border-radius: 7px;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.status-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.status-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.status-value {
+  font-size: 18px;
+  font-weight: 700;
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+  color: #e2e8f0;
+}
+
+.legend-bar {
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  border-radius: 7px;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.legend-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+  margin-right: auto;
+}
+
+.legend-items {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.legend-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legend-dot.node     { background: linear-gradient(135deg, #334155, #1e293b); border: 1.5px solid #475569; }
+.legend-dot.searching { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
+.legend-dot.found    { background: linear-gradient(135deg, #22c55e, #16a34a); }
+.legend-dot.deleted  { background: linear-gradient(135deg, #ef4444, #dc2626); }
+
+.legend-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #94a3b8;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .tree-visualizer {
+    padding: 16px;
+    gap: 16px;
+  }
+  .control-panel { padding: 16px; }
+  .algorithm-buttons { gap: 6px; }
+  .algo-btn { padding: 8px 16px; font-size: 12px; }
+  .action-buttons { gap: 8px; }
+  .action-btn { padding: 10px 20px; font-size: 13px; }
+  .node-input { width: 80px; padding: 9px 12px; }
+  .tree-canvas-wrapper { min-height: 300px; padding: 24px 12px; }
+  .legend-bar { gap: 16px; padding: 12px 16px; }
+  .legend-items { gap: 16px; }
+}

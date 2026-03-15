@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Searching from "./Pages/Searching";
 import Sorting from "./Pages/Sorting";
+import Trees from "./Pages/Trees";
 import Home from "./Pages/Home"
 import './App.css';
 function App() {
@@ -12,7 +13,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/sorting" element={<Sorting />} />
-         <Route path="/searching" element={<Searching />} />
+        <Route path="/searching" element={<Searching />} />
+        <Route path="/Trees" element={<Trees />} />
       </Routes>
     </BrowserRouter>
   );
